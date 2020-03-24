@@ -1,0 +1,28 @@
+{
+  "name": "sobat-ambyar",
+  "version": "0.0.1",
+  "description": "Pantun dan petuah untuk para Sobat Ambyar.",
+  "main": "app.js",
+  "scripts": {
+    "test": "tsc --listFiles",
+    "start": "tsc && node dist/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mkhuda/sobat-ambyar.git"
+  },
+  "author": "Mkhuda",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mkhuda/sobat-ambyar/issues"
+  },
+  "homepage": "https://github.com/mkhuda/sobat-ambyar#readme",
+  "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "@slack/events-api": "^2.3.2",
+    "@slack/web-api": "^5.8.0"
+  }
+}
