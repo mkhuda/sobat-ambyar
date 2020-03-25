@@ -19,11 +19,11 @@ const slackEvents: any = slackEventsApi.createEventAdapter(slackSigningSecret, {
 
 const app = express();
 
-// app.use("/slack/events", slackEvents.expressMiddleware());
+app.use("/slack/events", slackEvents.expressMiddleware());
 
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post("/slack/events", (req, res) => {
+app.post("/slack/events/unused", (req, res) => {
   console.log("Got body:", req.body);
   res.json({ challenge: req.body.challenge });
 });
