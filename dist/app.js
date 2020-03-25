@@ -24,9 +24,8 @@ var slackEvents = slackEventsApi.createEventAdapter(slackSigningSecret, {
 });
 var app = express();
 app.use("/slack/events", slackEvents.expressMiddleware());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.post("/slack/events/unused", function (req, res) {
-    console.log("Got body:", req.body);
+app.use(bodyParser.json());
+app.post("/", function (req, res) {
     res.json({ challenge: req.body.challenge });
 });
 slackEvents.on("message", function (event, _body, _headers) {

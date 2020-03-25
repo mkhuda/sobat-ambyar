@@ -21,10 +21,9 @@ const app = express();
 
 app.use("/slack/events", slackEvents.expressMiddleware());
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-app.post("/slack/events/unused", (req, res) => {
-  console.log("Got body:", req.body);
+app.post("/", (req, res) => {
   res.json({ challenge: req.body.challenge });
 });
 
