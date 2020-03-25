@@ -6,8 +6,6 @@
 
 A super simple slackbot for ~manusia-manusia ambyar~.
 
-<a href="https://slack.com/oauth/authorize?client_id=407013445267.723094934560&scope=bot"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"></a>
-
 </div>
 
 # Setup
@@ -30,15 +28,10 @@ npm start
 
 ```
 // Add this in your .env
-BOT_TOKEN=YOUR_OWN_BOT_TOKEN
+BOT_TOKEN=xoxb-******
+SLACK_SIGNING_SECRET=a********
+PORT=3002
 // Or using production ENV
-```
-
-```js
-const bot = new SlackBot({
-  token: `${process.env.BOT_TOKEN}`,
-  name: "YOUR_OWN_APP_NAME"
-});
 ```
 
 ## Author
