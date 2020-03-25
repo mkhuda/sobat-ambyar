@@ -35,10 +35,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var web_api_1 = require("@slack/web-api");
+var dotenv_1 = __importDefault(require("dotenv"));
 var isDev = process.env.NODE_ENV !== "production";
-isDev && require("dotenv").config();
+isDev && dotenv_1.default.config();
 var web = new web_api_1.WebClient(process.env.BOT_TOKEN);
 function handleMessage(event) {
     var text = event.text, channel = event.channel, user = event.user, subtype = event.subtype;

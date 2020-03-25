@@ -1,12 +1,12 @@
 import { handleMessage, handleMention } from "./slackWebApi";
-const http = require("http");
-const express = require("express");
-const bodyParser = require("body-parser");
-const slackEventsApi = require("@slack/events-api");
-const slackValidateRequest = require("validate-slack-request");
+import http from "http";
+import express from "express";
+import bodyParser from "body-parser";
+import * as slackEventsApi from "@slack/events-api";
+import dotenv from "dotenv";
 
 let isDev = process.env.NODE_ENV !== "production";
-isDev && require("dotenv").config();
+isDev && dotenv.config();
 
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const port = process.env.PORT || 3002;
@@ -32,7 +32,7 @@ slackEvents.on("app_mention", (event, _body, _headers) => {
 });
 
 slackEvents.on("error", error => {
-  if (error.code === slackEventsApi.errorCodes.TOKEN_VERIFICATION_FAILURE) {
+  if (error.code === slackEventsApi.errorCodes.SIGNATURE_VERIFICATION_FAILURE) {
     console.error(`An unverified request was sent to the Slack events Request URL. Request body: \
 ${JSON.stringify(error.body)}`);
   } else {

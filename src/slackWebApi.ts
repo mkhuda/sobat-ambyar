@@ -1,7 +1,8 @@
 import { WebClient } from "@slack/web-api";
+import dotenv from "dotenv";
 
 let isDev = process.env.NODE_ENV !== "production";
-isDev && require("dotenv").config();
+isDev && dotenv.config();
 
 const web = new WebClient(process.env.BOT_TOKEN);
 
