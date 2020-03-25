@@ -6,7 +6,8 @@
   "scripts": {
     "test": "tsc --listFiles",
     "build": "tsc",
-    "start": "tsc && node dist/app.js"
+    "dev": "tsc && node dist/app.js",
+    "start": "tsc && NODE_ENV=production node dist/app.js"
   },
   "repository": {
     "type": "git",

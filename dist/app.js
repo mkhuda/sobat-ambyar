@@ -1,20 +1,13 @@
 "use strict";
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var dotenv = __importStar(require("dotenv"));
 var slackWebApi_1 = require("./slackWebApi");
 var http = require("http");
 var express = require("express");
 var bodyParser = require("body-parser");
 var slackEventsApi = require("@slack/events-api");
 var slackValidateRequest = require("validate-slack-request");
-dotenv.config();
+var isDev = process.env.NODE_ENV !== "production";
+isDev && require("dotenv").config();
 var slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 var port = process.env.PORT || 3002;
 // Initialize the adapter to trigger listeners with envelope data and headers

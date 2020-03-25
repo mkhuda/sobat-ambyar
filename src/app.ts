@@ -1,4 +1,3 @@
-import * as dotenv from "dotenv";
 import { handleMessage, handleMention } from "./slackWebApi";
 const http = require("http");
 const express = require("express");
@@ -6,7 +5,8 @@ const bodyParser = require("body-parser");
 const slackEventsApi = require("@slack/events-api");
 const slackValidateRequest = require("validate-slack-request");
 
-dotenv.config();
+let isDev = process.env.NODE_ENV !== "production";
+isDev && require("dotenv").config();
 
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const port = process.env.PORT || 3002;
