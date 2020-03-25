@@ -38,7 +38,8 @@ slackEvents.on("error", error => {
 ${JSON.stringify(error.body)}`);
   } else {
     console.error(
-      `An error occurred while handling a Slack event: ${error.message}`
+      `An error occurred while handling a Slack event: ${error.message}`,
+      error
     );
   }
 });

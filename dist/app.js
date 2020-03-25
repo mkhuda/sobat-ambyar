@@ -37,7 +37,7 @@ slackEvents.on("error", function (error) {
         console.error("An unverified request was sent to the Slack events Request URL. Request body: " + JSON.stringify(error.body));
     }
     else {
-        console.error("An error occurred while handling a Slack event: " + error.message);
+        console.error("An error occurred while handling a Slack event: " + error.message, error);
     }
 });
 http.createServer(app).listen(port, function () {
