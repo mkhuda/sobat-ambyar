@@ -10,7 +10,6 @@ var isDev = process.env.NODE_ENV !== "production";
 isDev && require("dotenv").config();
 var slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 var port = process.env.PORT || 3002;
-// Initialize the adapter to trigger listeners with envelope data and headers
 var slackEvents = slackEventsApi.createEventAdapter(slackSigningSecret);
 var app = express();
 app.use("/slack/events", slackEvents.requestListener());
@@ -30,7 +29,6 @@ slackEvents.on("error", function (error) {
         console.error("An unverified request was sent to the Slack events Request URL. Request body: " + JSON.stringify(error.body));
     }
     else {
-        console.log("node_env", process.env.NODE_ENV, slackSigningSecret);
         console.error("An error occurred while handling a Slack event: " + error.message, error);
     }
 });

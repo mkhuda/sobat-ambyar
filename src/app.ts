@@ -11,7 +11,6 @@ isDev && require("dotenv").config();
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const port = process.env.PORT || 3002;
 
-// Initialize the adapter to trigger listeners with envelope data and headers
 const slackEvents: any = slackEventsApi.createEventAdapter(slackSigningSecret);
 
 const app = express();
@@ -37,7 +36,6 @@ slackEvents.on("error", error => {
     console.error(`An unverified request was sent to the Slack events Request URL. Request body: \
 ${JSON.stringify(error.body)}`);
   } else {
-    console.log(`node_env`, process.env.NODE_ENV, slackSigningSecret);
     console.error(
       `An error occurred while handling a Slack event: ${error.message}`,
       error

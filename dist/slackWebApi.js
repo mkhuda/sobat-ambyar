@@ -41,7 +41,6 @@ var isDev = process.env.NODE_ENV !== "production";
 isDev && require("dotenv").config();
 var web = new web_api_1.WebClient(process.env.BOT_TOKEN);
 function handleMessage(event) {
-    console.log("handle message");
     var text = event.text, channel = event.channel, user = event.user, subtype = event.subtype;
     var isNotEdited = subtype == undefined;
     var isUser = user !== "U010AK6U7QT";
@@ -51,7 +50,6 @@ function handleMessage(event) {
 }
 exports.handleMessage = handleMessage;
 function handleMention(event) {
-    console.log("handleMention");
     var text = event.text, channel = event.channel, user = event.user, edited = event.edited;
     var isNotEdited = edited == undefined;
     if (isNotEdited && text.includes(" pantun"))
@@ -60,7 +58,6 @@ function handleMention(event) {
 exports.handleMention = handleMention;
 function postMessage(channel, text) {
     var _this = this;
-    console.log("post message");
     (function () { return __awaiter(_this, void 0, void 0, function () {
         var error_1;
         return __generator(this, function (_a) {
