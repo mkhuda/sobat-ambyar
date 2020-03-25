@@ -2,7 +2,7 @@
     
 # Sobat Ambyar SlackBot
 
-![SobatAmbyar](https://github.com/mkhuda/sobat-ambyar/raw/master/sobat-ambyar.png)
+![SobatAmbyar](https://avatars.slack-edge.com/2020-03-24/1023381274981_cddb07dd666086c15004_192.png)
 
 A super simple slackbot for ~manusia-manusia ambyar~.
 
