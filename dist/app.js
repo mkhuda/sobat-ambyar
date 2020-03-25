@@ -20,7 +20,7 @@ var port = process.env.PORT || 3002;
 // Initialize the adapter to trigger listeners with envelope data and headers
 var slackEvents = slackEventsApi.createEventAdapter(slackSigningSecret);
 var app = express();
-app.use("/slack/events", slackEvents.expressMiddleware());
+app.use("/slack/events", slackEvents.requestListener());
 app.use(bodyParser.json());
 app.post("/slack/events", function (req, res) {
     var hasChallenge = req.body.challenge !== undefined;

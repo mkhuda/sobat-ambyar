@@ -16,7 +16,7 @@ const slackEvents: any = slackEventsApi.createEventAdapter(slackSigningSecret);
 
 const app = express();
 
-app.use("/slack/events", slackEvents.expressMiddleware());
+app.use("/slack/events", slackEvents.requestListener());
 app.use(bodyParser.json());
 
 app.post("/slack/events", (req, res) => {
