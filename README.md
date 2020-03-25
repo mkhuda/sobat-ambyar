@@ -13,7 +13,7 @@ A super simple slackbot for ~manusia-manusia ambyar~.
 ### Clone the repository
 
 ```
-git clone https://github.com/mkhuda/sobat-ambyar.git && cd inspireNuggetsSlackBot
+git clone https://github.com/mkhuda/sobat-ambyar.git && cd sobat-ambyar
 ```
 
 ### Install dependencies
@@ -24,7 +24,7 @@ npm install
 npm start
 ```
 
-### [Create a bot in Slack](https://api.slack.com/apps/AM92STGGG/general?) and generate and include your OAuth bot token
+### [Create a Slack App](https://api.slack.com/apps/new) and generate and include your OAuth bot token
 
 ```
 // Add this in your .env
