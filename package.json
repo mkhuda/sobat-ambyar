@@ -6,7 +6,7 @@
   "scripts": {
     "test": "tsc --listFiles",
     "build": "tsc",
-    "start": "node dist/app.js"
+    "start": "tsc && node dist/app.js"
   },
   "repository": {
     "type": "git",

@@ -16,14 +16,13 @@ const slackEvents: any = slackEventsApi.createEventAdapter(slackSigningSecret);
 
 const app = express();
 
+app.use("/slack/events", slackEvents.expressMiddleware());
 app.use(bodyParser.json());
 
 app.post("/slack/events", (req, res) => {
   const hasChallenge = req.body.challenge !== undefined;
   hasChallenge && res.json({ challenge: req.body.challenge });
 });
-
-app.use("/slack/events", slackEvents.expressMiddleware());
 
 slackEvents.on("message", (event, _body, _headers) => {
   handleMessage(event);
