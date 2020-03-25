@@ -19,10 +19,6 @@ const slackEvents: any = slackEventsApi.createEventAdapter(slackSigningSecret, {
 
 const app = express();
 
-app.use("/slack/events", slackEvents.expressMiddleware());
-
-app.use(bodyParser.urlencoded({ extended: true }));
-
 app.post("/slack/events", (req, res) => {
   console.log("Got body:", req.body);
   res.sendStatus(200);
@@ -32,6 +28,9 @@ app.post("/slack/events", (req, res) => {
     res.send(`validate error`);
   }
 });
+// app.use("/slack/events", slackEvents.expressMiddleware());
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 slackEvents.on("message", (event, _body, _headers) => {
   handleMessage(event);

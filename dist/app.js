@@ -23,8 +23,6 @@ var slackEvents = slackEventsApi.createEventAdapter(slackSigningSecret, {
     includeHeaders: true
 });
 var app = express();
-app.use("/slack/events", slackEvents.expressMiddleware());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.post("/slack/events", function (req, res) {
     console.log("Got body:", req.body);
     res.sendStatus(200);
@@ -35,6 +33,8 @@ app.post("/slack/events", function (req, res) {
         res.send("validate error");
     }
 });
+// app.use("/slack/events", slackEvents.expressMiddleware());
+app.use(bodyParser.urlencoded({ extended: true }));
 slackEvents.on("message", function (event, _body, _headers) {
     slackWebApi_1.handleMessage(event);
 });
