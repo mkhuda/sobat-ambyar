@@ -23,12 +23,12 @@ var slackEvents = slackEventsApi.createEventAdapter(slackSigningSecret, {
     includeHeaders: true
 });
 var app = express();
-app.use("/slack/events", slackEvents.expressMiddleware());
 app.use(bodyParser.json());
 app.post("/slack/events", function (req, res) {
     var hasChallenge = req.body.challenge !== undefined;
     hasChallenge && res.json({ challenge: req.body.challenge });
     if (slackValidateRequest(slackSigningSecret, req)) {
+        app.use("/slack/events", slackEvents.expressMiddleware());
         console.log("validated");
     }
     else {
