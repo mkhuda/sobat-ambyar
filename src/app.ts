@@ -23,7 +23,7 @@ app.use("/slack/events", slackEvents.expressMiddleware());
 app.use(express.urlencoded({ extended: true }));
 
 app.post("/", (req, res, _next) => {
-  console.log(`slackvalidate`, req);
+  console.log(`slackvalidate`, process.env.SLACK_SIGNING_SECRET);
   if (slackValidateRequest(process.env.SLACK_SIGNING_SECRET, req)) {
     res.send("oke");
   } else {
