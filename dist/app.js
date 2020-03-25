@@ -18,23 +18,14 @@ dotenv.config();
 var slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 var port = process.env.PORT || 3002;
 // Initialize the adapter to trigger listeners with envelope data and headers
-var slackEvents = slackEventsApi.createEventAdapter(slackSigningSecret, {
-    includeBody: true,
-    includeHeaders: true
-});
+var slackEvents = slackEventsApi.createEventAdapter(slackSigningSecret);
 var app = express();
 app.use(bodyParser.json());
 app.post("/slack/events", function (req, res) {
     var hasChallenge = req.body.challenge !== undefined;
     hasChallenge && res.json({ challenge: req.body.challenge });
-    if (slackValidateRequest(slackSigningSecret, req)) {
-        app.use("/slack/events", slackEvents.expressMiddleware());
-        console.log("validated");
-    }
-    else {
-        console.log("error");
-    }
 });
+app.use("/slack/events", slackEvents.expressMiddleware());
 slackEvents.on("message", function (event, _body, _headers) {
     slackWebApi_1.handleMessage(event);
 });

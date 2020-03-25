@@ -12,10 +12,7 @@ const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const port = process.env.PORT || 3002;
 
 // Initialize the adapter to trigger listeners with envelope data and headers
-const slackEvents: any = slackEventsApi.createEventAdapter(slackSigningSecret, {
-  includeBody: true,
-  includeHeaders: true
-});
+const slackEvents: any = slackEventsApi.createEventAdapter(slackSigningSecret);
 
 const app = express();
 
@@ -24,13 +21,9 @@ app.use(bodyParser.json());
 app.post("/slack/events", (req, res) => {
   const hasChallenge = req.body.challenge !== undefined;
   hasChallenge && res.json({ challenge: req.body.challenge });
-  if (slackValidateRequest(slackSigningSecret, req)) {
-    app.use("/slack/events", slackEvents.expressMiddleware());
-    console.log("validated");
-  } else {
-    console.log("error");
-  }
 });
+
+app.use("/slack/events", slackEvents.expressMiddleware());
 
 slackEvents.on("message", (event, _body, _headers) => {
   handleMessage(event);
