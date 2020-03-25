@@ -46,7 +46,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var web_api_1 = require("@slack/web-api");
 var dotenv = __importStar(require("dotenv"));
 dotenv.config();
-var web = new web_api_1.WebClient(process.env.BOT_TOKEN);
+var web = new web_api_1.WebClient("xoxb-39335778578-1010652959843-8Mc4udv3DZRZYMobb4QKr1AW");
 function handleMessage(event) {
     console.log("handle message");
     var text = event.text, channel = event.channel, user = event.user, subtype = event.subtype;

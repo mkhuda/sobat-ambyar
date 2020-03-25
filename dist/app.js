@@ -15,7 +15,7 @@ var bodyParser = require("body-parser");
 var slackEventsApi = require("@slack/events-api");
 var slackValidateRequest = require("validate-slack-request");
 dotenv.config();
-var slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
+var slackSigningSecret = "143fa81e488b3778437d2cf6ef58b333";
 var port = process.env.PORT || 3002;
 // Initialize the adapter to trigger listeners with envelope data and headers
 var slackEvents = slackEventsApi.createEventAdapter(slackSigningSecret);

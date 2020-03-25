@@ -3,7 +3,9 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-const web = new WebClient(process.env.BOT_TOKEN);
+const web = new WebClient(
+  "xoxb-39335778578-1010652959843-8Mc4udv3DZRZYMobb4QKr1AW"
+);
 
 export function handleMessage(event) {
   console.log("handle message");
