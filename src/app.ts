@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.post("/", (req, res, _next) => {
   console.log(`slackvalidate`, req);
-  if (slackValidateRequest(process.env.SLACK_APP_SIGNING_SECRET, req)) {
+  if (slackValidateRequest(process.env.SLACK_SIGNING_SECRET, req)) {
     res.send("oke");
   } else {
     res.send(`validate error`);
