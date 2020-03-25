@@ -27,12 +27,7 @@ app.use("/slack/events", slackEvents.expressMiddleware());
 app.use(bodyParser.json());
 app.post("/", function (req, res) {
     console.log("Got body:", req.body);
-    if (slackValidateRequest(process.env.SLACK_SIGNING_SECRET, req)) {
-        res.send(req.body.challenge);
-    }
-    else {
-        res.send("validate error");
-    }
+    res.json({ challenge: req.body.challenge });
 });
 slackEvents.on("message", function (event, _body, _headers) {
     slackWebApi_1.handleMessage(event);

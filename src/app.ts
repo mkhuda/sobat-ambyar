@@ -25,11 +25,7 @@ app.use(bodyParser.json());
 
 app.post("/", (req, res) => {
   console.log("Got body:", req.body);
-  if (slackValidateRequest(process.env.SLACK_SIGNING_SECRET, req)) {
-    res.send(req.body.challenge);
-  } else {
-    res.send(`validate error`);
-  }
+  res.json({ challenge: req.body.challenge });
 });
 
 slackEvents.on("message", (event, _body, _headers) => {
