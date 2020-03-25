@@ -20,6 +20,12 @@ const app = express();
 
 app.use("/slack/events", slackEvents.expressMiddleware());
 
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
+
 // Listeners now receive 3 arguments
 slackEvents.on("message", (event, body, headers) => {
   handleMessage(event);

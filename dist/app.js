@@ -23,6 +23,9 @@ var slackEvents = slackEventsApi.createEventAdapter(slackSigningSecret, {
 });
 var app = express();
 app.use("/slack/events", slackEvents.expressMiddleware());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 // Listeners now receive 3 arguments
 slackEvents.on("message", function (event, body, headers) {
     slackWebApi_1.handleMessage(event);
