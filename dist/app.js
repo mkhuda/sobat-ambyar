@@ -23,8 +23,8 @@ var slackEvents = slackEventsApi.createEventAdapter(slackSigningSecret, {
     includeHeaders: true
 });
 var app = express();
-app.use(bodyParser.json());
 app.use("/slack/events", slackEvents.expressMiddleware());
+app.use(bodyParser.json());
 app.post("/", function (req, res) {
     console.log("Got body:", req.body);
     if (slackValidateRequest(process.env.SLACK_SIGNING_SECRET, req)) {
