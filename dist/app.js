@@ -21,7 +21,7 @@ var port = process.env.PORT || 3002;
 var slackEvents = slackEventsApi.createEventAdapter(slackSigningSecret);
 var app = express();
 app.use("/slack/events", slackEvents.requestListener());
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.post("/slack/events", function (req, res) {
     var hasChallenge = req.body.challenge !== undefined;
     hasChallenge && res.json({ challenge: req.body.challenge });
