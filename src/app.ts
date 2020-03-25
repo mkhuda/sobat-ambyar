@@ -21,7 +21,7 @@ const router = express.Router();
 
 app.use("/slack/events", slackEvents.expressMiddleware());
 
-router.post("/slack/events", (req, res, _next) => {
+app.post("/", (req, res, _next) => {
   console.log(`slackvalidate`, process.env.SLACK_SIGNING_SECRET);
   if (slackValidateRequest(process.env.SLACK_SIGNING_SECRET, req)) {
     res.send("oke");
@@ -30,7 +30,6 @@ router.post("/slack/events", (req, res, _next) => {
   }
 });
 
-app.use("/", router);
 app.use(express.urlencoded({ extended: true }));
 
 slackEvents.on("message", (event, _body, _headers) => {
