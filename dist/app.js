@@ -22,17 +22,19 @@ var slackEvents = slackEventsApi.createEventAdapter(slackSigningSecret, {
     includeHeaders: true
 });
 var app = express();
+var router = express.Router();
 app.use("/slack/events", slackEvents.expressMiddleware());
-app.use(express.urlencoded({ extended: true }));
-app.post("/", function (req, res, _next) {
-    console.log("slackvalidate", req);
-    if (slackValidateRequest(process.env.SLACK_APP_SIGNING_SECRET, req)) {
+router.post("/slack/events", function (req, res, _next) {
+    console.log("slackvalidate", process.env.SLACK_SIGNING_SECRET);
+    if (slackValidateRequest(process.env.SLACK_SIGNING_SECRET, req)) {
         res.send("oke");
     }
     else {
         res.send("validate error");
     }
 });
+app.use("/", router);
+app.use(express.urlencoded({ extended: true }));
 slackEvents.on("message", function (event, _body, _headers) {
     slackWebApi_1.handleMessage(event);
 });
