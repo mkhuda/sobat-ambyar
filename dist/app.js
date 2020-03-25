@@ -11,8 +11,8 @@ var dotenv = __importStar(require("dotenv"));
 var slackWebApi_1 = require("./slackWebApi");
 var http = require("http");
 var express = require("express");
-var bodyParser = require("body-parser");
 var slackEventsApi = require("@slack/events-api");
+var slackValidateRequest = require("validate-slack-request");
 dotenv.config();
 var slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 var port = process.env.PORT || 3002;
@@ -23,14 +23,20 @@ var slackEvents = slackEventsApi.createEventAdapter(slackSigningSecret, {
 });
 var app = express();
 app.use("/slack/events", slackEvents.expressMiddleware());
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-// Listeners now receive 3 arguments
-slackEvents.on("message", function (event, body, headers) {
+app.use(express.urlencoded({ extended: true }));
+app.post("/", function (req, res, _next) {
+    console.log("slackvalidate", req);
+    if (slackValidateRequest(process.env.SLACK_APP_SIGNING_SECRET, req)) {
+        res.send("oke");
+    }
+    else {
+        res.send("validate error");
+    }
+});
+slackEvents.on("message", function (event, _body, _headers) {
     slackWebApi_1.handleMessage(event);
 });
-slackEvents.on("app_mention", function (event, body, headers) {
+slackEvents.on("app_mention", function (event, _body, _headers) {
     slackWebApi_1.handleMention(event);
 });
 slackEvents.on("error", function (error) {

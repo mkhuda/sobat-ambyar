@@ -2,8 +2,8 @@ import * as dotenv from "dotenv";
 import { handleMessage, handleMention } from "./slackWebApi";
 const http = require("http");
 const express = require("express");
-const bodyParser = require("body-parser");
 const slackEventsApi = require("@slack/events-api");
+const slackValidateRequest = require("validate-slack-request");
 
 dotenv.config();
 
@@ -20,18 +20,22 @@ const app = express();
 
 app.use("/slack/events", slackEvents.expressMiddleware());
 
-app.use(
-  bodyParser.urlencoded({
-    extended: true
-  })
-);
+app.use(express.urlencoded({ extended: true }));
 
-// Listeners now receive 3 arguments
-slackEvents.on("message", (event, body, headers) => {
+app.post("/", (req, res, _next) => {
+  console.log(`slackvalidate`, req);
+  if (slackValidateRequest(process.env.SLACK_APP_SIGNING_SECRET, req)) {
+    res.send("oke");
+  } else {
+    res.send(`validate error`);
+  }
+});
+
+slackEvents.on("message", (event, _body, _headers) => {
   handleMessage(event);
 });
 
-slackEvents.on("app_mention", (event, body, headers) => {
+slackEvents.on("app_mention", (event, _body, _headers) => {
   handleMention(event);
 });
 
