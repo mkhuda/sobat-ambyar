@@ -8,7 +8,7 @@ const slackValidateRequest = require("validate-slack-request");
 
 dotenv.config();
 
-const slackSigningSecret = "143fa81e488b3778437d2cf6ef58b333";
+const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const port = process.env.PORT || 3002;
 
 // Initialize the adapter to trigger listeners with envelope data and headers
