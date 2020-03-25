@@ -2,6 +2,7 @@ import * as dotenv from "dotenv";
 import { handleMessage, handleMention } from "./slackWebApi";
 const http = require("http");
 const express = require("express");
+const bodyParser = require("body-parser");
 const slackEventsApi = require("@slack/events-api");
 const slackValidateRequest = require("validate-slack-request");
 
@@ -20,11 +21,11 @@ const app = express();
 
 app.use("/slack/events", slackEvents.expressMiddleware());
 
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post("/", (req, res, _next) => {
-  console.log(`req`, req.body, res);
-  console.log(`slackvalidate`, process.env.SLACK_SIGNING_SECRET);
+app.post("/slack/events", (req, res) => {
+  console.log("Got body:", req.body);
+  res.sendStatus(200);
   if (slackValidateRequest(process.env.SLACK_SIGNING_SECRET, req)) {
     res.send("oke");
   } else {

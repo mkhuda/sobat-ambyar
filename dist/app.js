@@ -11,6 +11,7 @@ var dotenv = __importStar(require("dotenv"));
 var slackWebApi_1 = require("./slackWebApi");
 var http = require("http");
 var express = require("express");
+var bodyParser = require("body-parser");
 var slackEventsApi = require("@slack/events-api");
 var slackValidateRequest = require("validate-slack-request");
 dotenv.config();
@@ -23,10 +24,10 @@ var slackEvents = slackEventsApi.createEventAdapter(slackSigningSecret, {
 });
 var app = express();
 app.use("/slack/events", slackEvents.expressMiddleware());
-app.use(express.urlencoded({ extended: true }));
-app.post("/", function (req, res, _next) {
-    console.log("req", req.body, res);
-    console.log("slackvalidate", process.env.SLACK_SIGNING_SECRET);
+app.use(bodyParser.urlencoded({ extended: true }));
+app.post("/slack/events", function (req, res) {
+    console.log("Got body:", req.body);
+    res.sendStatus(200);
     if (slackValidateRequest(process.env.SLACK_SIGNING_SECRET, req)) {
         res.send("oke");
     }
