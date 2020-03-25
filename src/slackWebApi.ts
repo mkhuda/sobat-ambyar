@@ -6,7 +6,6 @@ dotenv.config();
 const web = new WebClient(process.env.BOT_TOKEN);
 
 export function handleMessage(event) {
-  console.log(`message`, event);
   const { text, channel, user, subtype } = event;
   const isNotEdited = subtype == undefined;
   const isUser = user !== "U010AK6U7QT";
@@ -19,7 +18,6 @@ export function handleMessage(event) {
 }
 
 export function handleMention(event) {
-  console.log(`event`, event);
   const { text, channel, user, edited } = event;
   const isNotEdited = edited == undefined;
   if (isNotEdited && text.includes(" pantun"))
