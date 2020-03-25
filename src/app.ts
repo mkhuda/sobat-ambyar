@@ -23,8 +23,14 @@ app.use("/slack/events", slackEvents.expressMiddleware());
 
 app.use(bodyParser.json());
 
-app.post("/", (req, res) => {
-  res.json({ challenge: req.body.challenge });
+app.post("/slack/events", (req, res) => {
+  const hasChallenge = req.body.challenge !== undefined;
+  hasChallenge && res.json({ challenge: req.body.challenge });
+  if (slackValidateRequest(slackSigningSecret, req)) {
+    console.log("validated");
+  } else {
+    console.log("error");
+  }
 });
 
 slackEvents.on("message", (event, _body, _headers) => {

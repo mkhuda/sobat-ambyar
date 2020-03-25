@@ -25,8 +25,15 @@ var slackEvents = slackEventsApi.createEventAdapter(slackSigningSecret, {
 var app = express();
 app.use("/slack/events", slackEvents.expressMiddleware());
 app.use(bodyParser.json());
-app.post("/", function (req, res) {
-    res.json({ challenge: req.body.challenge });
+app.post("/slack/events", function (req, res) {
+    var hasChallenge = req.body.challenge !== undefined;
+    hasChallenge && res.json({ challenge: req.body.challenge });
+    if (slackValidateRequest(slackSigningSecret, req)) {
+        console.log("validated");
+    }
+    else {
+        console.log("error");
+    }
 });
 slackEvents.on("message", function (event, _body, _headers) {
     slackWebApi_1.handleMessage(event);
