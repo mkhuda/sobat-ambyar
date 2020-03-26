@@ -8,10 +8,15 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-mongo.databaseConnect((db: any, err: any) => {
-  if (err) console.log(err);
-  // start the rest of your app here
-  console.log(db);
+mongo.databaseConnect(async (db: any, err: any) => {
+  if (err) console.log(`err`, err);
+  const dbTest = db.collection('pantun');
+  try {
+    const testList = await dbTest.find().toArray();
+    console.log(testList);
+  } catch (e) {
+    throw e;
+  }
 });
 
 const slackSigningSecret: string = process.env.SLACK_SIGNING_SECRET || 'empty';
