@@ -30,11 +30,13 @@
   "dependencies": {
     "@slack/events-api": "^2.3.2",
     "@slack/web-api": "^5.8.0",
+    "@types/mongodb": "^3.5.3",
     "@types/node": ">=4.2.0 < 13",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "http": "0.0.1-security",
+    "mongodb": "^3.5.5",
     "shx": "^0.3.2"
   }
 }

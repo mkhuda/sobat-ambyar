@@ -12,9 +12,9 @@
             "elements"
         ],
         "indent": [
-            true,
+            false,
             "spaces",
-            2
+            4
         ],
         "max-line-length": [
             true,

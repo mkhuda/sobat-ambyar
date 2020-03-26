@@ -1,14 +1,18 @@
 import { handleMessage, handleMention } from './slackWebApi';
+import * as mongo from './utils/db';
 import http from 'http';
 import express from 'express';
 import bodyParser from 'body-parser';
 import * as slackEventsApi from '@slack/events-api';
 import dotenv from 'dotenv';
 
-const isDev = process.env.NODE_ENV !== 'production';
-if (isDev) {
-  dotenv.config();
-}
+dotenv.config();
+
+mongo.databaseConnect((db: any, err: any) => {
+  if (err) console.log(err);
+  // start the rest of your app here
+  console.log(db);
+});
 
 const slackSigningSecret: string = process.env.SLACK_SIGNING_SECRET || 'empty';
 const port = process.env.PORT || 3002;
