@@ -10,10 +10,10 @@ dotenv.config();
 
 mongo.databaseConnect(async (err: any) => {
   if (err) console.log(`err`, err);
-  const db = await mongo.getDB();
-  console.log(db)
-  const dbTest = await db.collection('pantun');
+  const db = mongo.getDB();
   try {
+    const dbTest = await db.collection('pantun');
+    console.log(dbTest);
     const testList = await dbTest.find().toArray();
     console.log(testList);
   } catch (e) {
