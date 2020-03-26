@@ -8,7 +8,7 @@ export async function databaseConnect(callback: any): Promise<any> {
     const url: string = process.env.MONGODB_URI || 'mongo';
     try {
         mongo.connect(url, (err, client) => {
-            _db = client;
+            _db = client.db(process.env.MONGODB_DATABASE_NAME);
             return callback(err)
         });
     } catch (err) {
