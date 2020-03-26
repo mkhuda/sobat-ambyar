@@ -8,9 +8,9 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-mongo.databaseConnect(async (db: any, err: any) => {
+mongo.databaseConnect(async (err: any) => {
   if (err) console.log(`err`, err);
-  const dbTest = db.collection('pantun');
+  const dbTest = mongo.getDB().collection('pantun');
   try {
     const testList = await dbTest.find().toArray();
     console.log(testList);
