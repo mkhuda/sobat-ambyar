@@ -1,7 +1,7 @@
 import * as mongo from './db';
 
-export async function getSingleData() {
-    await mongo.databaseConnect(async (err: any) => {
+export function getSingleData() {
+    mongo.databaseConnect(async (err: any) => {
         if (err) console.log(`err`, err);
         const dbTest = mongo.getDB().collection('pantun');
         try {
