@@ -1,7 +1,7 @@
 import * as mongo from './db';
 
-export function getSingleData() {
-    mongo.databaseConnect(async (err: any) => {
+export async function getSingleData() {
+    await mongo.databaseConnect(async (err: any) => {
         if (err) console.log(`err`, err);
         const dbTest = mongo.getDB().collection('pantun');
         try {
@@ -9,11 +9,9 @@ export function getSingleData() {
             const lessCounter = allData.map((obj: any) => {
                 return obj.count;
             }).sort()[0];
-            console.log(lessCounter);
             const singleData = allData.filter((obj: any) => {
                 return obj.count === lessCounter
             })[0];
-            console.log('singledata', singleData);
             mongo.closeDB();
             return singleData;
         } catch (e) {

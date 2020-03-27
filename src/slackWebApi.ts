@@ -1,5 +1,6 @@
-import { WebClient } from '@slack/web-api';
 import dotenv from 'dotenv';
+import { WebClient } from '@slack/web-api';
+import { getSingleData } from './utils/query';
 
 const isDev = process.env.NODE_ENV !== 'production';
 if (isDev) {
@@ -20,11 +21,12 @@ export function handleMessage(event: any): void {
   }
 }
 
-export function handleMention(event: any): void {
+export async function handleMention(event: any): Promise<void> {
   const { text, channel, edited } = event;
   const isNotEdited = edited === undefined;
   if (isNotEdited && text.includes(' pantun')) {
-    postMessage(channel, 'Pantun apa ya?');
+    const data: any = await getSingleData();
+    postMessage(channel, data.text);
   }
 }
 
