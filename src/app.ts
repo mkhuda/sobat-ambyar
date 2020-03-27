@@ -5,7 +5,6 @@ import dotenv from 'dotenv';
 import * as slackEventsApi from '@slack/events-api';
 import router from './rest';
 import { handleMessage, handleMention } from './slackWebApi';
-import { getSingleData } from './utils/query';
 
 dotenv.config();
 
