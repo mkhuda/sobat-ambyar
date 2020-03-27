@@ -16,9 +16,9 @@ const slackEvents: any = slackEventsApi.createEventAdapter(slackSigningSecret);
 const app = express();
 
 app.use('/slack/events', slackEvents.requestListener());
-app.use('/api/v2', router);
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use('/api/v2', router);
 app.post('/slack/events', (req, res) => {
   const hasChallenge = req.body.challenge !== undefined;
   if (hasChallenge) { res.json({ challenge: req.body.challenge }); }
