@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import { WebClient } from '@slack/web-api';
-import { getSingleData } from './utils/query';
+import * as query from './utils/query';
 
 const isDev = process.env.NODE_ENV !== 'production';
 if (isDev) {
@@ -26,7 +26,7 @@ export async function handleMention(event: any): Promise<void> {
   const isNotEdited = edited === undefined;
   if (isNotEdited && text.includes(' pantun')) {
     try {
-      const data: any = getSingleData();
+      const data: any = query.singlePantun;
       console.log(data);
       postMessage(channel, data.text);
     } catch (error) {

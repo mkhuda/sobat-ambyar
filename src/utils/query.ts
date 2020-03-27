@@ -1,6 +1,6 @@
 import * as mongo from './db';
 
-export function getSingleData() {
+export const singlePantun: any =
     mongo.databaseConnect(async (err: any) => {
         if (err) console.log(`err`, err);
         const dbTest = mongo.getDB().collection('pantun');
@@ -19,4 +19,3 @@ export function getSingleData() {
             throw e;
         }
     });
-}
