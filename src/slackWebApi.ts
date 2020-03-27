@@ -25,7 +25,7 @@ export function handleMention(event: any): void {
   const { text, channel, edited } = event;
   const isNotEdited = edited === undefined;
   if (isNotEdited && text.includes(' pantun')) {
-    const data: any = query.singlePantun;
+    const data: any = query.singlePantun();
     console.log(data);
     postMessage(channel, data.text);
   }
