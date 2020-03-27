@@ -21,8 +21,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api/v2', router);
 
-getSingleData();
-
 app.post('/slack/events', (req, res) => {
   const hasChallenge = req.body.challenge !== undefined;
   if (hasChallenge) { res.json({ challenge: req.body.challenge }); }

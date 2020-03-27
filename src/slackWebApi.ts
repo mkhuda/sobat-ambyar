@@ -26,6 +26,7 @@ export async function handleMention(event: any): Promise<void> {
   const isNotEdited = edited === undefined;
   if (isNotEdited && text.includes(' pantun')) {
     const data: any = await getSingleData();
+    console.log(data);
     postMessage(channel, data.text);
   }
 }
