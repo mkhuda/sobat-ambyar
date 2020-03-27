@@ -7,7 +7,7 @@ export function getSingleData() {
         try {
             const allData = await dbTest.find().toArray();
             const lessCounter = allData.map((obj: any) => {
-                Number(obj.count);
+                return obj.count;
             }).sort()[0];
             console.log(lessCounter);
             const singleData = allData.filter((obj: any) => {
