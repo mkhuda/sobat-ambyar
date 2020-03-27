@@ -12,7 +12,6 @@ router.get('/', (_req, res) => {
             res.json(testList);
             mongo.closeDB();
         } catch (e) {
-            res.sendStatus(500);
             throw e;
         }
     });
