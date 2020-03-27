@@ -1,23 +1,12 @@
-import { handleMessage, handleMention } from './slackWebApi';
-import * as mongo from './utils/db';
 import http from 'http';
 import express from 'express';
 import bodyParser from 'body-parser';
-import * as slackEventsApi from '@slack/events-api';
 import dotenv from 'dotenv';
+import * as slackEventsApi from '@slack/events-api';
+import router from './rest';
+import { handleMessage, handleMention } from './slackWebApi';
 
 dotenv.config();
-
-mongo.databaseConnect(async (err: any) => {
-  if (err) console.log(`err`, err);
-  const dbTest = mongo.getDB().collection('pantun');
-  try {
-    const testList = await dbTest.find().toArray();
-    console.log(testList);
-  } catch (e) {
-    throw e;
-  }
-});
 
 const slackSigningSecret: string = process.env.SLACK_SIGNING_SECRET || 'empty';
 const port = process.env.PORT || 3002;
@@ -27,6 +16,7 @@ const slackEvents: any = slackEventsApi.createEventAdapter(slackSigningSecret);
 const app = express();
 
 app.use('/slack/events', slackEvents.requestListener());
+app.use('/api/v2', router);
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post('/slack/events', (req, res) => {
