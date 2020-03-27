@@ -14,10 +14,10 @@ export function getSingleData() {
                 obj.count == lessCounter
             })[0];
             console.log('singledata', singleData);
+            mongo.closeDB();
             return singleData;
         } catch (e) {
             throw e;
         }
     });
-    mongo.closeDB();
 }
