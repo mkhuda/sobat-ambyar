@@ -21,17 +21,13 @@ export function handleMessage(event: any): void {
   }
 }
 
-export async function handleMention(event: any): Promise<void> {
+export function handleMention(event: any): void {
   const { text, channel, edited } = event;
   const isNotEdited = edited === undefined;
   if (isNotEdited && text.includes(' pantun')) {
-    try {
-      const data: any = query.singlePantun;
-      console.log(data);
-      postMessage(channel, data.text);
-    } catch (error) {
-      console.log(error);
-    }
+    const data: any = query.singlePantun;
+    console.log(data);
+    postMessage(channel, data.text);
   }
 }
 

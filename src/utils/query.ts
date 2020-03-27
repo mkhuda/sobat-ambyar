@@ -13,7 +13,7 @@ export const singlePantun: any =
                 return obj.count == lessCounter
             });
             const gotData = singleData[Math.floor(Math.random() * singleData.length)];
-            mongo.closeDB();
+            // mongo.closeDB();
             return gotData;
         } catch (e) {
             throw e;
