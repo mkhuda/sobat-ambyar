@@ -12,7 +12,7 @@ export async function getSingleData() {
             const singleData = allData.filter((obj: any) => {
                 return obj.count === lessCounter
             });
-            const gotData = singleData(Math.floor(Math.random() * singleData.length))
+            const gotData = singleData[Math.floor(Math.random() * singleData.length)];
             mongo.closeDB();
             return gotData;
         } catch (e) {
