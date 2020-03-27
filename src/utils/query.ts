@@ -11,7 +11,7 @@ export function getSingleData() {
             }).sort()[0];
             console.log(lessCounter);
             const singleData = allData.filter((obj: any) => {
-                obj.count == lessCounter
+                return obj.count === lessCounter
             })[0];
             console.log('singledata', singleData);
             mongo.closeDB();
