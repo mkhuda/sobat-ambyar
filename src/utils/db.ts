@@ -8,7 +8,7 @@ export async function databaseConnect(callback: any): Promise<any> {
     const url: string = process.env.MONGODB_URI || 'mongo';
     try {
         mongo.connect(url, { useUnifiedTopology: true }, (err, client) => {
-            _db = client.db(process.env.MONGODB_DATABASE_NAME);
+            _db = client;
             return callback(err)
         });
     } catch (err) {
@@ -16,6 +16,6 @@ export async function databaseConnect(callback: any): Promise<any> {
     }
 }
 
-export const getDB = () => _db;
+export const getDB = () => _db.db(process.env.MONGODB_DATABASE_NAME);
 
 export const closeDB = () => _db.close();
