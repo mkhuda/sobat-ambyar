@@ -1,4 +1,5 @@
 import express from 'express';
+import MongoClient from 'mongodb';
 import * as mongo from './utils/db';
 import { IPantun } from './interfaces/IPantun';
 
@@ -22,7 +23,7 @@ router.post('/create', (req, res) => {
     const { text, language, count, code } = req.body;
     if (code !== process.env.ACCESS_CODE) res.sendStatus(500);
     const data: IPantun = {
-        text, language, count
+        text, language, count: Number(count)
     }
     mongo.databaseConnect(async (err: any) => {
         if (err) console.log(`err`, err);
