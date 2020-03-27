@@ -10,8 +10,9 @@ export async function getSingleData() {
                 return obj.count;
             }).sort()[0];
             const singleData = allData.filter((obj: any) => {
-                return obj.count === lessCounter
+                return obj.count == lessCounter
             });
+            console.log(singleData);
             const gotData = singleData[Math.floor(Math.random() * singleData.length)];
             mongo.closeDB();
             return gotData;
