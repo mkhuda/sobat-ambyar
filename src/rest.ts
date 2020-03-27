@@ -1,5 +1,4 @@
 import express from 'express';
-import MongoClient from 'mongodb';
 import * as mongo from './utils/db';
 import { IPantun } from './interfaces/IPantun';
 
