@@ -1,7 +1,6 @@
 import dotenv from 'dotenv';
 import { WebClient } from '@slack/web-api';
 import * as query from './utils/query';
-
 const isDev = process.env.NODE_ENV !== 'production';
 if (isDev) {
   dotenv.config();
@@ -21,25 +20,26 @@ export function handleMessage(event: any): void {
   }
 }
 
-export function handleMention(event: any): void {
+export async function handleMention(event: any): Promise<void> {
   const { text, channel, edited } = event;
   const isNotEdited = edited === undefined;
   if (isNotEdited && text.includes(' pantun')) {
-    query.getSinglePantun().then(data => {
-      postMessage(channel, data.text);
-    }).catch(err => console.log(err))
+    try {
+      const pantun = await query.getSinglePantun();
+      await postMessage(channel, pantun.text);
+    } catch (e) {
+      throw e;
+    };
   }
 }
 
-function postMessage(channel: string, text: string): void {
-  (async (): Promise<void> => {
-    try {
-      await web.chat.postMessage({
-        channel,
-        text
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  })();
+async function postMessage(channel: string, text: string): Promise<void> {
+  try {
+    await web.chat.postMessage({
+      channel,
+      text
+    });
+  } catch (e) {
+    throw e;
+  }
 }
