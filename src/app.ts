@@ -5,11 +5,13 @@ import dotenv from 'dotenv';
 import * as slackEventsApi from '@slack/events-api';
 import router from './rest';
 import { handleMessage, handleMention } from './slackWebApi';
+import hsp from 'heroku-self-ping';
 
 dotenv.config();
 
 const slackSigningSecret: string = process.env.SLACK_SIGNING_SECRET || 'empty';
 const port = process.env.PORT || 3002;
+const usePing = process.env.USE_PING;
 
 const slackEvents: any = slackEventsApi.createEventAdapter(slackSigningSecret);
 
@@ -44,6 +46,8 @@ ${JSON.stringify(error.body)}`);
     );
   }
 });
+
+if (usePing == "1") hsp(process.env.APP_URL, { verbose: true });
 
 http.createServer(app).listen(port, () => {
   console.log(`server listening on port ${port}`);
