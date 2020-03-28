@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import { WebClient } from '@slack/web-api';
-import * as mongo from './utils/db';
+import * as query from './utils/query';
 
 const isDev = process.env.NODE_ENV !== 'production';
 if (isDev) {
@@ -25,24 +25,9 @@ export function handleMention(event: any): void {
   const { text, channel, edited } = event;
   const isNotEdited = edited === undefined;
   if (isNotEdited && text.includes(' pantun')) {
-    mongo.databaseConnect(async (err: any) => {
-      if (err) console.log(`err`, err);
-      const dbTest = mongo.getDB().collection('pantun');
-      try {
-        const allData = await dbTest.find().toArray();
-        const lessCounter = allData.map((obj: any) => {
-          return obj.count;
-        }).sort()[0];
-        const singleData = allData.filter((obj: any) => {
-          return obj.count == lessCounter
-        });
-        const gotData = singleData[Math.floor(Math.random() * singleData.length)];
-        mongo.closeDB();
-        postMessage(channel, gotData.text);
-      } catch (e) {
-        throw e;
-      }
-    });
+    query.getSinglePantun().then(data => {
+      postMessage(channel, data.text);
+    }).catch(err => console.log(err))
   }
 }
 
