@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+import { IPantun } from '../interfaces/IPantun';
 import * as mongo from './db';
 
 export async function getSinglePantun() {
@@ -12,7 +14,14 @@ export async function getSinglePantun() {
             return obj.count == lessCounter
         });
         const gotData = singleData[Math.floor(Math.random() * singleData.length)];
-        connect.close()
+        const updateData: IPantun = {
+            ...gotData,
+            count: Number(gotData.count + 1)
+        }
+        pantun.updateOne({ _id: new ObjectId(gotData._id) }, { $set: updateData }, (err: any, _r: any) => {
+            if (err) throw err;
+            connect.close();
+        });
         return gotData;
     } catch (e) {
         throw e;
