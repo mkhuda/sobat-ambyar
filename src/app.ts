@@ -20,8 +20,10 @@ const app = express();
 app.use('/slack/events', slackEvents.requestListener());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.get('/', (_req, res) => {
+  res.sendStatus(200);
+})
 app.use('/api/v2', router);
-
 app.post('/slack/events', (req, res) => {
   const hasChallenge = req.body.challenge !== undefined;
   if (hasChallenge) { res.json({ challenge: req.body.challenge }); }
