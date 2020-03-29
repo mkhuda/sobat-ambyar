@@ -47,7 +47,7 @@ ${JSON.stringify(error.body)}`);
   }
 });
 
-if (usePing == "1") hsp(process.env.APP_URL, { verbose: true });
+if (usePing == "1") hsp(process.env.APP_URL);
 
 http.createServer(app).listen(port, () => {
   console.log(`server listening on port ${port}`);
