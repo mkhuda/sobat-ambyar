@@ -2,6 +2,7 @@ import http from 'http';
 import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
+import path from 'path';
 import * as slackEventsApi from '@slack/events-api';
 import router from './rest';
 import { handleMessage, handleMention } from './slackWebApi';
@@ -19,11 +20,14 @@ const app = express();
 
 app.use('/slack/events', slackEvents.requestListener());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/api/v2', router);
 
 app.get('/', (_req, res) => {
   res.sendStatus(200);
 })
-app.use('/api/v2', router);
+app.get('/slack-buttons', (_req, res) => {
+  res.sendFile(path.join(__dirname, '../public/slack.html'));
+})
 app.post('/slack/events', (req, res) => {
   const hasChallenge = req.body.challenge !== undefined;
   if (hasChallenge) { res.json({ challenge: req.body.challenge }); }
