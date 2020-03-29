@@ -8,7 +8,7 @@ dotenv.config();
 const web = new WebClient(process.env.BOT_TOKEN);
 
 export async function handleMessage(event: any): Promise<void> {
-  const { text, channel, user, subtype } = event;
+  const { text, channel, user, subtype, thread_ts } = event;
 
   const isUser = user !== 'U010AK6U7QT';
   const isNotEdited = subtype === undefined;
@@ -17,7 +17,7 @@ export async function handleMessage(event: any): Promise<void> {
   if (isNotEdited && isUser && maybeContainWords) {
     try {
       const pantun = await query.getSinglePantun();
-      postMessage(channel, '', common.buildTextBlocks(pantun.text));
+      postMessage(channel, '', common.buildTextBlocks(pantun.text), thread_ts);
     } catch (e) {
       throw e;
     };
@@ -39,12 +39,13 @@ export async function handleMention(event: any): Promise<void> {
   }
 }
 
-async function postMessage(channel: string, text: string, block?: Array<any>): Promise<void> {
+async function postMessage(channel: string, text: string, block?: Array<any>, thread_ts?: string | undefined): Promise<void> {
   try {
     await web.chat.postMessage({
       channel,
       text,
-      blocks: block
+      blocks: block,
+      thread_ts
     });
   } catch (e) {
     throw e;
