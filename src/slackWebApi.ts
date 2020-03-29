@@ -15,10 +15,6 @@ export async function handleMessage(event: any): Promise<void> {
   const maybeContainWords = common.contains(text);
 
   if (isNotEdited && isUser && maybeContainWords) {
-    postMessage(
-      channel,
-      `Halo *sobat ambyar*, ada yang perlu dibanting? <@${user}>`
-    );
     try {
       const pantun = await query.getSinglePantun();
       postMessage(channel, '', common.buildTextBlocks(pantun.text));
