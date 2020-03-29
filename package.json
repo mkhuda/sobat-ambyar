@@ -5,7 +5,6 @@
   "main": "app.js",
   "scripts": {
     "get:files": "tsc --listFiles",
-    "prepare": "npm run build",
     "build": "npm run build:clean && tsc",
     "build:clean": "shx rm -rf ./dist",
     "lint": "tslint --project .",
@@ -32,12 +31,14 @@
   "dependencies": {
     "@slack/events-api": "^2.3.2",
     "@slack/web-api": "^5.8.0",
+    "@types/got": "^9.6.9",
     "@types/mongodb": "^3.5.3",
     "@types/node": ">=4.2.0 < 13",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "heroku-self-ping": "^2.0.0",
+    "got": "^10.7.0",
+    "heroku-self-ping": "git+https://git@github.com/mkhuda/heroku-self-ping.git",
     "http": "0.0.1-security",
     "mongodb": "^3.5.5",
     "shx": "^0.3.2"
