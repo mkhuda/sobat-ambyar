@@ -28,9 +28,15 @@ npm start
 
 ```
 // Add this in your .env
-BOT_TOKEN=xoxb-******
-SLACK_SIGNING_SECRET=a********
 PORT=3002
+USE_PING=0
+APP_URL=https://your-app-com-or-herokuapp.com/
+SLACK_CLIENT_ID=xxxxxxxx.xxxxx
+SLACK_CLIENT_SECRET=xxxxxxxxxxxxxxxxxxxxx
+SLACK_SIGNING_SECRET=xxxxxxxxxxxxxx
+BOT_TOKEN=xoxb-xxxxxxxxxxxxxxxxxx
+MONGODB_DATABASE_NAME=xxxxxxxxxxx
+MONGODB_URI=mongodb://xxxxxxxxxxxxxxxx
 // Or using production ENV
 ```
 

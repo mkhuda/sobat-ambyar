@@ -2,7 +2,9 @@ import http from 'http';
 import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
+import path from 'path';
 import * as slackEventsApi from '@slack/events-api';
+import * as request from 'superagent';
 import router from './rest';
 import { handleMessage, handleMention } from './slackWebApi';
 import hsp from 'heroku-self-ping';
@@ -19,11 +21,30 @@ const app = express();
 
 app.use('/slack/events', slackEvents.requestListener());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/api/v2', router);
 
 app.get('/', (_req, res) => {
   res.sendStatus(200);
 })
-app.use('/api/v2', router);
+app.get('/slack-buttons', (_req, res) => {
+  res.sendFile(path.join(__dirname, '../public/slack.html'));
+});
+app.get('/auth/redirect', (req, res) => {
+  const uri = 'https://slack.com/api/oauth.v2.access?code='
+    + req.query.code +
+    '&client_id=' + process.env.SLACK_CLIENT_ID +
+    '&client_secret=' + process.env.SLACK_CLIENT_SECRET +
+    '&redirect_uri=' + process.env.SLACK_REDIRECT_URI
+
+  request.post(uri, (err, response) => {
+    if (response.body.ok) {
+      res.redirect("https://slack.com/app_redirect?channel=" + response.body.incoming_webhook.channel_id)
+    } else {
+      console.log(err);
+      res.send("Error authorization").status(200).end()
+    }
+  })
+})
 app.post('/slack/events', (req, res) => {
   const hasChallenge = req.body.challenge !== undefined;
   if (hasChallenge) { res.json({ challenge: req.body.challenge }); }
