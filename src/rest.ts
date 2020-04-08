@@ -10,11 +10,9 @@ router.get('/', async (_req, res) => {
         const db = connect.db(process.env.MONGODB_DATABASE_NAME).collection('pantun');
         const allData = await db.find().toArray();
         res.json(allData);
-        connect.close();
     } catch (e) {
         throw e
     }
-
 })
 
 router.post('/create', async (req, res) => {
@@ -28,7 +26,6 @@ router.post('/create', async (req, res) => {
         const db = connect.db(process.env.MONGODB_DATABASE_NAME).collection('pantun');
         const insertData = await db.insertOne(data);
         res.json(insertData);
-        connect.close();
     } catch (e) {
         throw e
     }
