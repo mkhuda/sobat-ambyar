@@ -40,7 +40,7 @@ app.get('/auth/redirect', (req, res) => {
     if (response.body.ok) {
       res.redirect("https://slack.com/app_redirect?channel=" + response.body.incoming_webhook.channel_id)
     } else {
-      console.log(err);
+      console.log(err, response.body);
       res.send("Error authorization").status(200).end()
     }
   })
