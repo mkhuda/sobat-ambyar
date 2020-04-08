@@ -5,19 +5,19 @@ import * as common from './utils/common';
 
 dotenv.config();
 
-const web = new WebClient(process.env.BOT_TOKEN);
-
 export async function handleMessage(event: any): Promise<void> {
   const { text, channel, user, subtype, thread_ts } = event;
 
-  const isUser = user !== 'U010AK6U7QT';
   const isNotEdited = subtype === undefined;
   const maybeContainWords = common.contains(text);
 
-  if (isNotEdited && isUser && maybeContainWords) {
+  if (isNotEdited && maybeContainWords) {
     try {
       const pantun = await query.getSinglePantun();
-      postMessage(channel, '', common.buildTextBlocks(pantun.text), thread_ts);
+      const botInfo = await query.findBotToken(event);
+      const isNotBot = user != botInfo.bot_user_id;
+      if (isNotBot)
+        postMessage(botInfo.access_token, channel, '', common.buildTextBlocks(pantun.text), thread_ts);
     } catch (e) {
       throw e;
     };
@@ -39,7 +39,8 @@ export async function handleMention(event: any): Promise<void> {
   }
 }
 
-async function postMessage(channel: string, text: string, block?: Array<any>, thread_ts?: string | undefined): Promise<void> {
+async function postMessage(token: string, channel: string, text: string, block?: Array<any>, thread_ts?: string | undefined): Promise<void> {
+  const web = new WebClient(token);
   try {
     await web.chat.postMessage({
       channel,
@@ -47,6 +48,15 @@ async function postMessage(channel: string, text: string, block?: Array<any>, th
       blocks: block,
       thread_ts
     });
+  } catch (e) {
+    throw e;
+  }
+}
+
+export async function conversationsJoin(token: string, channel: string): Promise<void> {
+  const web = new WebClient(token);
+  try {
+    await web.conversations.join({ channel });
   } catch (e) {
     throw e;
   }
