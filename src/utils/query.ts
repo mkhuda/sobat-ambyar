@@ -1,7 +1,6 @@
 import { ObjectId } from "mongodb";
-import { IPantun } from "../interfaces/IPantun";
-import { ISlackAuth } from "../interfaces/ISlackAuth";
 import * as mongo from "./db";
+import { IPantun, ISlackAuth } from "../interfaces/";
 
 export async function getSinglePantun() {
   try {
