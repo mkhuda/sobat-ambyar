@@ -52,8 +52,7 @@ export async function createSlackAuth(response: any) {
     const db = connect
       .db(process.env.MONGODB_DATABASE_NAME)
       .collection("slack-bot-token");
-    await db.findOneAndDelete({
-      channel_id: body.incoming_webhook.channel_id,
+    await db.deleteMany({
       team_id: body.team.id,
     });
     await db.insertOne(data);
@@ -68,10 +67,12 @@ export async function findBotToken(event: any) {
     const db = connect
       .db(process.env.MONGODB_DATABASE_NAME)
       .collection("slack-bot-token");
-    const findOne = db.findOne({
-      team_id: event.team,
-      channel_id: event.channel,
-    });
+    const findOne = await db.findOne(
+      {
+        team_id: event.team,
+      },
+      { sort: { $natural: -1 } }
+    );
     return findOne;
   } catch (e) {
     throw e;
