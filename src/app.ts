@@ -8,7 +8,7 @@ import * as request from 'superagent';
 import hsp from 'heroku-self-ping';
 
 import router from './rest';
-import { conversationsJoin, handleMessage, handleMention } from './slackWebApi';
+import { conversationsJoin, handleMessage, handleMention } from './slack';
 import * as query from './utils/query';
 
 dotenv.config();
