@@ -68,7 +68,10 @@ export async function findBotToken(event: any) {
     const db = connect
       .db(process.env.MONGODB_DATABASE_NAME)
       .collection("slack-bot-token");
-    const findOne = db.findOne({ team_id: event.team });
+    const findOne = db.findOne({
+      team_id: event.team,
+      channel_id: event.channel,
+    });
     return findOne;
   } catch (e) {
     throw e;
