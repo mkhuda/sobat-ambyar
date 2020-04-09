@@ -1,6 +1,6 @@
 import express from "express";
 import * as mongo from "./utils/db";
-import { IPantun } from "./interfaces/IPantun";
+import { IPantun } from "./interfaces/";
 
 const router = express.Router();
 
