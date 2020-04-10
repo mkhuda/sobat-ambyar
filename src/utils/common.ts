@@ -6,10 +6,13 @@ export function contains(target: string) {
     "galau",
     "didi kempot",
   ];
+
   let value = 0;
+
   pattern.forEach((word) => {
     value = value + Number(target.includes(word));
   });
+  
   return value >= 1;
 }
 

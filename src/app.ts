@@ -5,20 +5,17 @@ import dotenv from "dotenv";
 import path from "path";
 import * as slackEventsApi from "@slack/events-api";
 import hsp from "heroku-self-ping";
-
 import router from "./rest";
 import auth_router from "./auth";
 import { handleMessage, handleMention } from "./slack";
 
 dotenv.config();
 
-const slackSigningSecret: string = process.env.SLACK_SIGNING_SECRET || "empty";
+const app = express();
 const port = process.env.PORT || 3002;
 const usePing = process.env.USE_PING;
-
+const slackSigningSecret: string = process.env.SLACK_SIGNING_SECRET || "empty";
 const slackEvents: any = slackEventsApi.createEventAdapter(slackSigningSecret);
-
-const app = express();
 
 app.use("/slack/events", slackEvents.requestListener());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -41,11 +38,9 @@ app.post("/slack/events", (req, res) => {
 slackEvents.on("message", (event: any, _body: any, _headers: any) => {
   handleMessage(event);
 });
-
 slackEvents.on("app_mention", (event: any, _body: any, _headers: any) => {
   handleMention(event);
 });
-
 slackEvents.on("error", (error: any) => {
   console.error("Event error", error.message);
 });
