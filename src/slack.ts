@@ -7,7 +7,6 @@ dotenv.config();
 
 export async function handleMessage(event: any): Promise<void> {
   const { text, channel, user, subtype, thread_ts } = event;
-
   const isNotEdited = subtype === undefined;
   const maybeContainWords = common.contains(text);
 
@@ -33,6 +32,7 @@ export async function handleMessage(event: any): Promise<void> {
 export async function handleMention(event: any): Promise<void> {
   const { text, edited } = event;
   const isNotEdited = edited === undefined;
+  
   if (isNotEdited && text.includes(" pantun")) {
     try {
       const pantun = await query.getSinglePantun();

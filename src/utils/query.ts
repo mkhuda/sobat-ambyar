@@ -22,6 +22,7 @@ export async function getSinglePantun() {
       ...gotData,
       count: Number(gotData.count + 1),
     };
+
     pantun.updateOne(
       { _id: new ObjectId(gotData._id) },
       { $set: updateData },
@@ -29,6 +30,7 @@ export async function getSinglePantun() {
         if (err) throw err;
       }
     );
+
     return gotData;
   } catch (e) {
     throw e;
@@ -46,11 +48,13 @@ export async function createSlackAuth(response: any) {
     team_id: body.team.id,
     bot_user_id: body.bot_user_id,
   };
+
   try {
     const connect = await mongo.databaseConnect();
     const db = connect
       .db(process.env.MONGODB_DATABASE_NAME)
       .collection("slack-bot-token");
+
     await db.deleteMany({
       team_id: body.team.id,
     });
@@ -72,6 +76,7 @@ export async function findBotToken(event: any) {
       },
       { sort: { $natural: -1 } }
     );
+    
     return findOne;
   } catch (e) {
     throw e;

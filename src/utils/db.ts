@@ -5,6 +5,7 @@ dotenv.config();
 
 export async function databaseConnect(): Promise<any> {
   const url: string = process.env.MONGODB_URI || "mongo";
+  
   try {
     const connect = await mongo.connect(url, { useUnifiedTopology: true });
     return connect;
