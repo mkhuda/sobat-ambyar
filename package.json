@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/mkhuda/sobat-ambyar#readme",
   "devDependencies": {
+    "shx": "^0.3.2",
     "tsc-watch": "^4.2.3",
     "tslint": "^5.17.0",
     "tslint-config-airbnb": "^5.11.1",
